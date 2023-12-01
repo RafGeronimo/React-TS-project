@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import NewNote from "./NewNote";
 import { useLocalStorage } from "./useLocalStorage";
 import { useMemo } from "react";
+import * as uuid from "uuid/v4";
 
 export type RawNote = {
   id: string;
@@ -42,6 +43,12 @@ function App() {
       };
     });
   }, [notes, tags]);
+
+  function onCreateNotes({ tags, ...data }: NoteData) {
+    setNotes((prevNotes) => {
+      return [...prevNotes, { ...data, id: uuid() }];
+    });
+  }
 
   return (
     <Container className="my-4">
